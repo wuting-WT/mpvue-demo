@@ -1,0 +1,38 @@
+<template>
+   <swiper :autoplay="true" :indicator-dots="true" :interval="3000" :circular="true">
+   <swiper-item v-for="item in data" :key="item.id">
+     <a :href="item.url">
+       <img :src="item.img" alt="">
+     </a>
+   </swiper-item>
+   </swiper>
+</template>
+<script>
+export default {
+  created () {
+    console.log(this.data, 'swiper')
+  },
+  props: {
+    data: {
+      type: Array,
+      default: []
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+    .itemContainer {
+        width: 100%;
+        height: 100%;
+    }
+
+    .itemContainer {
+
+        img {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+        
+    }
+</style>
