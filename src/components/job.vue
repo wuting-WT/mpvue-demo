@@ -46,7 +46,6 @@ export default {
 }
 </script>
 <style scoped>
-@import url('../shared/iconfont.css');
 
 .icons {
     padding-right: 10rpx;
