@@ -27,4 +27,6 @@
 
 ```
     git checkout -b ${yourname}
+
+    dev...
 ```
