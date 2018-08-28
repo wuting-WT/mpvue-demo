@@ -1,12 +1,12 @@
 <template>
   <div class="cotainer">
-     <swiper :data="sliders"/>
+     <sliders :data="sliders"/>
      <navbar :slider="sliders"/>
   </div>
 </template>
 
 <script>
-import swiper from '@/components/swiper'
+import sliders from '@/components/sliders'
 import navbar from '@/components/navbar'
 
 export default {
@@ -35,7 +35,7 @@ export default {
     }
   },
   components: {
-    swiper,
+    sliders,
     navbar
   },
   methods: {
