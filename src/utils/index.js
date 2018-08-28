@@ -77,7 +77,7 @@ const previewImage = (urls, complete) => new Promise((resolve, reject) => {
   })
 })
 
-export default {
+export {
   formatNumber,
   formatTime,
   post,

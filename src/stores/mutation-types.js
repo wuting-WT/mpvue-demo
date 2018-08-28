@@ -1,5 +1,5 @@
 const FETCH_JOBS = 'FECTH_JOBS'
 
-export default {
+export {
   FETCH_JOBS
 }

@@ -1,4 +1,4 @@
-import jobs from './model/jobs'
+import jobs from './jobs'
 
 export default {
   jobs
