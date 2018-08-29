@@ -18,17 +18,16 @@ function formatTime (date) {
   return `${t1} ${t2}`
 }
 
-const get = (url, data, header, timeout) => new Promise((resolve, reject) => {
+const get = (url, data, timeout) => new Promise((resolve, reject) => {
   wx.requestTimer = setInterval(() => reject(new Error('fetch timeout!')), timeout || 10000)
   const clear = () => clearInterval(wx.requestTimer)
   wx.request({
     url: url,
     data: data,
-    header: header,
     method: 'GET',
-    success: data => {
+    success: res => {
       clear()
-      resolve(data)
+      resolve(res.data)
     },
     fail: error => {
       clear()
@@ -37,13 +36,12 @@ const get = (url, data, header, timeout) => new Promise((resolve, reject) => {
   })
 })
 
-const post = (url, data, header) => new Promise((resolve, reject) => {
+const post = (url, data) => new Promise((resolve, reject) => {
   wx.request({
     url: url,
     data: data,
-    header: header,
     method: 'POST',
-    success: data => resolve(data),
+    success: res => resolve(res.data),
     fail: error => reject(error)
   })
 })

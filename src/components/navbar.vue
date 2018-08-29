@@ -26,10 +26,11 @@ export default {
     height: 60px;
     display: flex;
     position: fixed;
+    z-index: 99;
     bottom: 0;
     align-items: center;
     justify-content: space-around;
-    background-color:rgba(248, 248, 255, .5);
+    background-color:rgb(248, 248, 255);
   }
 
   .icon {
