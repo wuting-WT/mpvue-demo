@@ -1,48 +1,28 @@
 <template>
-                <div class="jobs">
-                    <div class="jobsBaseInfo clear">
-                        <span class="jobsName">{{job.title}}</span>
-                        <span class="jobPay"><span class="iconfont icon-jiageprice1 icons"/><span>{{job.money}}/天</span></span>
+    <div class="jobs">
+        <div class="jobsBaseInfo clear">
+                        <span class="jobsName">{{'啊啊啊啊啊'}}</span>
+                        <span class="jobPay"><span class="iconfont icon-jiageprice1 icons"/><span>{{100}}/天</span></span>
                     </div>
                     <div class="jobsDetailInfo clear">
                         <div class="leftInfo">
-                            <div class="jobPlace clear"><span><span class="iconfont icon-icon- icons"/><span>{{job.addr}}</span></span></div>
-                            <span class="requirement"><span class="iconfont icon-xiaoxi icons"></span>{{job.depict}}</span>
+                            <div class="jobPlace clear"><span><span class="iconfont icon-icon- icons"/><span>{{'啊啊啊啊啊'}}</span></span></div>
+                            <span class="requirement"><span class="iconfont icon-xiaoxi icons"></span>{{'啊啊啊啊啊'}}</span>
                         </div>
                         <div class='rightInfo'>
-                            <div class="number"><span class="iconfont icon-weibiaoti-_huabanfuben icons"/><span>{{job.peopleNum}}</span></div>
-                            <span class="release-date"><span class="iconfont icon-icon icons"/><span>{{createTime}}</span></span>
+                            <div class="number"><span class="iconfont icon-weibiaoti-_huabanfuben icons"/><span>{{12}}</span></div>
+                            <span class="release-date"><span class="iconfont icon-icon icons"/><span>{{'2018-10-1'}}</span></span>
                         </div>
                     </div>
-                        <button type="primary" class="apply-btn">申请</button>                        
-                </div>
+         <button type="primary" class="apply-btn">申请</button>                        
+    </div>
 </template>
 <script>
 export default {
   mounted () { console.log(this) },
   data () {
-    return {
-      createTime: this.format(this.job.createTime)
-    }
   },
-  props: ['job', 'formatTime'],
-  methods: {
-    format: function formatTime (date) {
-      let DATE = new Date(date)
-      function formatNumber (n) {
-        const str = n.toString()
-        return str[1] ? str : `0${str}`
-      }
-
-      const year = DATE.getFullYear()
-      const month = DATE.getMonth() + 1
-      const day = DATE.getDate()
-
-      const t1 = [year, month, day].map(formatNumber).join('/')
-
-      return `${t1}`
-    }
-  }
+  props: ['job']
 }
 </script>
 <style scoped>
