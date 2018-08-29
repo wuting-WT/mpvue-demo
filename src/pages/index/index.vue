@@ -1,18 +1,21 @@
 <template>
-  <div class="cotainer">
+  <div class="container">
      <sliders :data="sliders"/>
      <navbar/>
-     <job/>
+     <jobs :jobs="jobs"/>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import { FETCH_JOBS } from '@/stores/mutation-types'
 import sliders from '@/components/sliders'
 import navbar from '@/components/navbar'
-import job from '@/components/job'
+import jobs from '@/components/jobs'
 
 export default {
   created () {
+    console.log(this.getJobs())
     console.log(this)
   },
   data () {
@@ -36,15 +39,22 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState('jobs', {
+      jobs: state => state.jobs
+    })
+  },
+  methods: {
+    ...mapActions('jobs', {
+      getJobs: FETCH_JOBS
+    })
+  },
   components: {
     sliders,
     navbar,
-    job
-  },
-  methods: {
+    jobs
   }
 }
 </script>
-
-<style scoped>
+<style lang="scss" scoped>
 </style>

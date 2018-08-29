@@ -29,3 +29,9 @@
 
     dev...
 ```
+
+## mock
+```
+    cd mock
+    run sever.js
+```
