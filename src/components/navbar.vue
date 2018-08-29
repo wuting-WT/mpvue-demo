@@ -1,17 +1,17 @@
 <template>
   <div class="navContainer">
-    <navigator url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">
+    <a :href="'/pages/index/main'" hover-class="navigator-hover">
     <i class="icon jobs"></i>
-    </navigator>
-    <navigator url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">
+    </a>
+    <a :href="'/pages/driver/main'" hover-class="navigator-hover">
     <i class="icon drivers"></i>
-    </navigator>
-    <navigator url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">
+    </a>
+    <a :href="'/pages/lost/main'" hover-class="navigator-hover">
     <i class="icon thing"></i>
-    </navigator>
-    <navigator url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">
+    </a>
+    <a :href="'/pages/user/main'" hover-class="navigator-hover">
     <i class="icon me"></i>
-    </navigator>
+    </a>
   </div>
 </template>
 

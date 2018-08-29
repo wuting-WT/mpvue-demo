@@ -1,13 +1,15 @@
 <template>
   <div class="cotainer">
      <sliders :data="sliders"/>
-     <navbar :slider="sliders"/>
+     <navbar/>
+     <job/>
   </div>
 </template>
 
 <script>
 import sliders from '@/components/sliders'
 import navbar from '@/components/navbar'
+import job from '@/components/job'
 
 export default {
   created () {
@@ -36,7 +38,8 @@ export default {
   },
   components: {
     sliders,
-    navbar
+    navbar,
+    job
   },
   methods: {
   }
