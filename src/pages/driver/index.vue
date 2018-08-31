@@ -1,16 +1,16 @@
 <template>
     <div>
         driver
-         <navbar/>
+         <!-- <navbar/> -->
     </div>
 </template>
 <script>
-import navbar from '@/components/navbar'
+// import navbar from '@/components/navbar'
 export default {
   data () {
   },
   components: {
-    navbar
+    // navbar
   }
 }
 </script>

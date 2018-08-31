@@ -5,5 +5,10 @@ import model from './model'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {...model}
+  modules: {...model},
+  getters: {
+    getIsAuth: state => {
+      console.log(state)
+    }
+  }
 })

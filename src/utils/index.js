@@ -75,11 +75,68 @@ const previewImage = (urls, complete) => new Promise((resolve, reject) => {
   })
 })
 
+/**
+ * @param url 跳转的地址
+ * @param type 类型 nav = navigateTo tab = switchTab redirect = redirectTo navBack = navigateBack relaunch = reLaunch
+ * 具体用法见：https://developers.weixin.qq.com/miniprogram/dev/api/ui-navigate.html
+ */
+const goTo = ({url, type = 'nav'}) => new Promise((resolve, reject) => {
+  switch (type) {
+    case 'nav':
+      wx.navigateTo({
+        url: url,
+        success: data => resolve(data),
+        fail: err => reject(err)
+      })
+      break
+    case 'tab':
+      wx.switchTab({
+        url: url,
+        success: data => resolve(data),
+        fail: err => reject(err)
+      })
+      break
+    case 'redirect':
+      wx.redirectTo({
+        url: url,
+        success: data => resolve(data),
+        fail: err => reject(err)
+      })
+      break
+    case 'navBack':
+      console.log(url)
+      wx.navigateBack({
+        url: url
+      })
+      break
+    case 'relaunch':
+      wx.reLaunch({
+        url: url,
+        success: data => resolve(data),
+        fail: err => reject(err)
+      })
+      break
+    default:
+      return new Error('not support type !')
+  }
+}
+)
+
+const login = (timeout) => new Promise((resolve, reject) => {
+  wx.login({
+    timeout: timeout,
+    success: errMsg => resolve(errMsg),
+    fail: err => reject(err)
+  })
+})
+
 export {
   formatNumber,
   formatTime,
   post,
   get,
   chooseImage,
-  previewImage
+  previewImage,
+  goTo,
+  login
 }
