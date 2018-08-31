@@ -1,13 +1,13 @@
 <template>
   <div class="container">
      <sliders :data="sliders"/>
-     <navbar/>
+     <!-- <navbar/> -->
      <jobs :jobs="jobs"/>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import { FETCH_JOBS } from '@/stores/mutation-types'
 import sliders from '@/components/sliders'
 import navbar from '@/components/navbar'
@@ -15,8 +15,22 @@ import jobs from '@/components/jobs'
 
 export default {
   created () {
-    console.log(this.getJobs())
     console.log(this)
+    this.getJobs()
+  },
+  computed: {
+    ...mapState('jobs', {
+      jobs: state => state.jobs
+    }),
+    ...mapGetters([
+      'getIsAuth'
+    ])
+  },
+  mounted () {
+    wx.navigateTo({
+      url: '/pages/auth/main',
+      fail: e => console.log(e)
+    })
   },
   data () {
     return {
@@ -38,11 +52,6 @@ export default {
         }
       ]
     }
-  },
-  computed: {
-    ...mapState('jobs', {
-      jobs: state => state.jobs
-    })
   },
   methods: {
     ...mapActions('jobs', {

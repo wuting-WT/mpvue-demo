@@ -1,7 +1,7 @@
 <template>
     <div>
         lost
-        <navbar/>
+        <!-- <navbar/> -->
     </div>
 </template>
 <script>

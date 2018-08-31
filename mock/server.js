@@ -24,4 +24,10 @@ Object.keys(config).forEach(key => {
   })
 })
 
+app['POST']('/api/user', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  console.log(req)
+})
+
 app.listen(port, () => console.log(`😄 Mock server is listening on port ${port}`))
