@@ -5,4 +5,4 @@ const decrypt = ({appId, sessionKey, encryptedData, iv}) => {
   return pc.decryptData(encryptedData, iv)
 }
 
-export default decrypt
+module.exports = decrypt

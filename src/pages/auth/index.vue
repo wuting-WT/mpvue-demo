@@ -12,26 +12,37 @@
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex'
-import { FETCH_USER } from '@/stores/mutation-types'
-import { goTo } from '@/utils'
+import { goTo, login, wxStorage, post, basehost } from '@/utils'
 export default {
   created () {
-    console.log(this)
+
   },
   methods: {
     bindGetUserInfo: function (e) {
-      if (e.target.errMsg === 'getUserInfo:ok') {
-        this.getUser(e.target)
-        goTo({
-          url: 'page/index/main',
-          type: 'navBack'
-        })
-      }
-    },
-    ...mapMutations('auth', {
-      getUser: FETCH_USER
-    })
+      login({
+        timeout: 1000
+      }).then(data => {
+        if (data.errMsg === 'login:ok' && e.target.errMsg === 'getUserInfo:ok') {
+          const params = {
+            code: data.code,
+            encryptedData: e.target.encryptedData,
+            iv: e.target.iv
+          }
+          post(`${basehost}/api/user`, {...params}).then(data => wxStorage({
+            key: 'user',
+            data: {
+              openId: data.openId,
+              nickName: data.nickName,
+              avatar: data.avatarUrl
+            }
+          }, 'set'))
+          goTo({
+            url: 'page/index/main',
+            type: 'navBack'
+          })
+        }
+      })
+    }
   }
 }
 </script>
@@ -42,7 +53,6 @@ export default {
     .avatar {
       width: 50px;
       height: 50px;
-      border-radius: 50%;
       margin: 50px auto 0 auto;
     }
 

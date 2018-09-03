@@ -1,7 +1,9 @@
 const FETCH_JOBS = 'FECTH_JOBS'
+const APPLY_JOBS = 'APPLY_JOBS'
 const FETCH_USER = 'FETCH_USER'
 
 export {
   FETCH_JOBS,
-  FETCH_USER
+  FETCH_USER,
+  APPLY_JOBS
 }

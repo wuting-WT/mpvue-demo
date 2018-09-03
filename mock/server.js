@@ -1,10 +1,17 @@
 const express = require('express')
+const request = require('request')
 const MockJS = require('mockjs')
+const bodyParser = require('body-parser')
 const config = require('./config')
+const decrypt = require('./decrypt')
 
+// 这个可能要根据自己的 appid 和 appsecret 改
+const appid = 'wx309baa77e8b7ed4b'
+const secret = '6179573d7783f3f9f0f2a3ed633ea7a5'
 const app = express()
 const port = 3001
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 Object.keys(config).forEach(key => {
   const api = key.split(' ')
   const type = api[0].toLowerCase()
@@ -24,10 +31,23 @@ Object.keys(config).forEach(key => {
   })
 })
 
-app['POST']('/api/user', (req, res) => {
+app['post']('/api/user', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  console.log(req)
+  const {code, encryptedData, iv} = req.body
+  request(`https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secret}&js_code=${code}&grant_type=authorization_code`, (error, response, body) => {
+    if (error) {
+      console.log(error)
+    }
+    const data = JSON.parse(body)
+    res.json({
+      ...decrypt({
+        appId: appid,
+        sessionKey: data.session_key,
+        encryptedData: encryptedData,
+        iv: iv
+      })
+    })
+  })
 })
-
 app.listen(port, () => console.log(`😄 Mock server is listening on port ${port}`))
