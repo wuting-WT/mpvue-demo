@@ -1,3 +1,5 @@
+const basehost = 'http://localhost:3001'
+
 function formatNumber (n) {
   const str = n.toString()
   return str[1] ? str : `0${str}`
@@ -19,7 +21,7 @@ function formatTime (date) {
 }
 
 const get = (url, data, timeout) => new Promise((resolve, reject) => {
-  wx.requestTimer = setInterval(() => reject(new Error('fetch timeout!')), timeout || 10000)
+  wx.requestTimer = setTimeout(() => reject(new Error('fetch timeout!')), timeout || 10000)
   const clear = () => clearInterval(wx.requestTimer)
   wx.request({
     url: url,
@@ -129,6 +131,38 @@ const login = (timeout) => new Promise((resolve, reject) => {
     fail: err => reject(err)
   })
 })
+/**
+ * @param key 本地缓存中的指定的 key String
+ * @param data 需要存储的内容 Object/String
+ * @param method set/get 调用 setStorage/getStorage String
+ */
+const wxStorage = ({key, data}, method) => new Promise((resolve, reject) => {
+  console.log(key, data)
+  if (method === 'get') {
+    wx.getStorage({
+      key: key,
+      success: errMsg => resolve(errMsg),
+      fail: error => reject(error)
+    })
+  } else if (method === 'set') {
+    wx.setStorage({
+      key: key,
+      data: data,
+      success: errMsg => resolve(errMsg),
+      fail: error => reject(error)
+    })
+  }
+})
+
+const openScanCode = (complete) => new Promise((resolve, reject) => {
+  wx.scanCode({
+    onlyFromCamera: true,
+    scanType: 'qrCode',
+    success: data => resolve(data),
+    fail: error => reject(error),
+    complete: complete
+  })
+})
 
 export {
   formatNumber,
@@ -138,5 +172,8 @@ export {
   chooseImage,
   previewImage,
   goTo,
-  login
+  login,
+  wxStorage,
+  basehost,
+  openScanCode
 }

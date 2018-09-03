@@ -1,34 +1,55 @@
 <template>
   <div class="jobsContainer">
-    <div v-for="(item, index) in jobs" :key="index" class="job">
+    <filter />
+    <div v-for="item in jobs" :key="item.id" class="job">
         <div class="job-base">
             <span class="name">{{item.name}}</span>
             <span class="price">￥{{item.price}}/天</span>
         </div>
         <div class="job-place">
             <span>{{item.place}}</span>
-            <span><span>{{item.apply_num}}</span>/{{item.expected_num}}</span>
+            <span><span class="apply_num">{{item.apply_num}}</span>/{{item.expected_num}}</span>
+            
         </div>
         <div class="job-extra">
-            <div class="introduction">
+            <div class="job_time">时间: 2018-08-10</div>
+            <button  type="primary" @click="applyJobs(item.id)" class="apply">{{!item.isApply ? '申请' : '已申请'}}</button>
+        </div>
+        <div class="introduction">
                 <span>简介：</span>
                 {{item.introduction}}
-            </div>
-            <button :disabled="false" type="primary" class="apply">申请</button>
         </div>
     </div>
   </div>
 </template>
 <script>
+import filter from '@/components/filter'
 export default {
-  created () {
-    console.log(this.jobs)
+  updated () {
+    console.log('updated')
+  },
+  data () {
+    return {
+      iIndex: ''
+    }
+  },
+  mounted () {
+    console.log(this)
+  },
+  methods: {
   },
   props: {
     jobs: {
       type: Array,
       default: []
+    },
+    applyJobs: {
+      type: Function,
+      default: function () {}
     }
+  },
+  components: {
+    filter
   }
 }
 </script>
@@ -36,10 +57,9 @@ export default {
   .jobsContainer {
     background-color: #f2f2f2;
     .job {
-        margin: 20px auto;
+        margin: 0px auto 20px auto;
         padding: 5px 15px;
         font-size: 16px;
-        color: #757575;
         background-color: #fff;
         box-shadow: 0 5px 25px #eceef0;
         .job-base {
@@ -62,9 +82,6 @@ export default {
             position: relative;
             width: 100%;
             min-height: 40px;
-            .introduction {
-                margin-right: 90px;
-            }
             .apply {
                 position: absolute;
                 right: 0;
@@ -76,6 +93,9 @@ export default {
                 background-color: rgb(82, 166, 193);
             }
         }
+        .introduction {
+                margin-right: 90px;
+            }
     }
   }
 </style>

@@ -1,36 +1,35 @@
 <template>
   <div class="container">
      <sliders :data="sliders"/>
-     <!-- <navbar/> -->
-     <jobs :jobs="jobs"/>
+     <jobs :jobs="jobs" :applyJobs="applyJobs"/>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
-import { FETCH_JOBS } from '@/stores/mutation-types'
+import { mapState, mapActions } from 'vuex'
+import { goTo, wxStorage } from '@/utils'
+import { FETCH_JOBS, APPLY_JOBS } from '@/stores/mutation-types'
 import sliders from '@/components/sliders'
 import navbar from '@/components/navbar'
 import jobs from '@/components/jobs'
 
 export default {
   created () {
-    console.log(this)
     this.getJobs()
   },
-  computed: {
-    ...mapState('jobs', {
-      jobs: state => state.jobs
-    }),
-    ...mapGetters([
-      'getIsAuth'
-    ])
-  },
   mounted () {
-    wx.navigateTo({
-      url: '/pages/auth/main',
-      fail: e => console.log(e)
-    })
+    wxStorage({
+      key: 'user'
+    }, 'get').then(res => {
+      console.log(!res.data.openId)
+      if (res.errMsg === 'getStorage:ok' && !res.data.openId) {
+        goTo({
+          url: '/pages/auth/main'
+        })
+      }
+    }).catch(e => goTo({
+      url: '/pages/auth/main'
+    }))
   },
   data () {
     return {
@@ -53,17 +52,33 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState('jobs', {
+      jobs: state => state.jobs
+    })
+  },
   methods: {
     ...mapActions('jobs', {
-      getJobs: FETCH_JOBS
+      getJobs: FETCH_JOBS,
+      applyJobs: APPLY_JOBS
     })
   },
   components: {
     sliders,
     navbar,
     jobs
+  },
+  async onPullDownRefresh () {
+    console.log('hasupdated')
+    wx.stopPullDownRefresh()
+  },
+  onReachBottom () {
+    console.log('loadmore')
   }
 }
 </script>
 <style lang="scss" scoped>
+  .container {
+    color: #757575;
+  }
 </style>
