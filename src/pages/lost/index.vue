@@ -1,18 +1,39 @@
 <template>
-    <div>
-        lost
-        <!-- <navbar/> -->
+    <div class="lostContainer">
+        <div class="rules">
+          mpvue 真香！
+        </div>
+        <lostList :lostsList="losts" />
     </div>
 </template>
 <script>
-import navbar from '@/components/navbar'
+import { mapState, mapActions } from 'vuex'
+import { FETCH_LOST } from '@/stores/mutation-types'
+import lostList from '@/components/lostList'
 export default {
-  data () {
+  created () {
+    this.getLosts()
+    console.log(this, 'lost')
+  },
+  computed: {
+    ...mapState('losts', {
+      losts: state => state.losts
+    })
+  },
+  methods: {
+    ...mapActions('losts', {
+      getLosts: FETCH_LOST
+    })
   },
   components: {
-    navbar
+    lostList
   }
 }
 </script>
 <style lang="scss" scoped>
+     .rules {
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+        }
 </style>

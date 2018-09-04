@@ -17,7 +17,7 @@
             'icon-you': true,
             'transform180': applyArrow === 'drop' }"></span>
           </div>
-          <div :class="['jobsList', {'listHeight': isMyListShow}]">
+          <div :class="['jobsList', {'listAnimation': isMyListShow}]">
             <div class="job" v-for="item in myList" :key="item.id">
               <span class="jobsName">{{item.place + '-' + item.name}}</span>
               <span :class="['jobsStatus', {done: item.isDone, noDone: !item.isDone}]">{{item.isDone ? '已完成' : '没去'}}</span>
@@ -40,9 +40,6 @@ import { mapState } from 'vuex'
 import { openScanCode } from '@/utils'
 import navbar from '@/components/navbar'
 export default {
-  created () {
-    console.log(this, 'user')
-  },
   data () {
     return {
       applyArrow: 'rise',
@@ -51,12 +48,12 @@ export default {
   },
   computed: {
     ...mapState({
-      myList: state => state.jobs.jobs
+      myList: state => state.jobs.jobs.slice(0, 10)
     })
   },
   methods: {
     toScnaCode: function () {
-      openScanCode().then(data => console.log(data)).catch(err => console.log9(err))
+      openScanCode().then(data => console.log(data)).catch(err => console.log(err))
     },
     myListShow: function () {
       this.isMyListShow = !this.isMyListShow
@@ -114,10 +111,11 @@ export default {
         }
       }
       .jobsList {
-        width: 100%;
         height: 0;
-        overflow: hidden;
+        transform: scale(0);
+        opacity: 0;
         background-color: #f0f0f0;
+        transition: all 1s ;
       }
     }
 }
@@ -134,7 +132,9 @@ export default {
    transform: rotate(90deg)
 }
 
-.listHeight {
+.listAnimation {
   height: 100% !important;
+  transform: scale(1) !important;
+  opacity: 1 !important;
 }
 </style>

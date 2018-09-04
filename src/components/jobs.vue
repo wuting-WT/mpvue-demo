@@ -16,8 +16,8 @@
             <button  type="primary" @click="applyJobs(item.id)" class="apply">{{!item.isApply ? '申请' : '已申请'}}</button>
         </div>
         <div class="introduction">
-                <span>简介：</span>
-                {{item.introduction}}
+            <span>简介：</span>
+            {{item.introduction}}
         </div>
     </div>
   </div>
@@ -25,17 +25,6 @@
 <script>
 import filter from '@/components/filter'
 export default {
-  updated () {
-    console.log('updated')
-  },
-  data () {
-    return {
-      iIndex: ''
-    }
-  },
-  mounted () {
-    console.log(this)
-  },
   methods: {
   },
   props: {

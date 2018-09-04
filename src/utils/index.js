@@ -68,9 +68,10 @@ const chooseImage = (count, complete, isSave) => new Promise((resolve, reject) =
   })
 })
 
-const previewImage = (urls, complete) => new Promise((resolve, reject) => {
+const previewImage = ({current, imgList, complete}) => new Promise((resolve, reject) => {
   wx.previewImage({
-    urls: urls,
+    current: current,
+    urls: imgList,
     complete: complete,
     success: res => resolve(res),
     fail: error => reject(error)

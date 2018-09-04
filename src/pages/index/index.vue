@@ -21,7 +21,6 @@ export default {
     wxStorage({
       key: 'user'
     }, 'get').then(res => {
-      console.log(!res.data.openId)
       if (res.errMsg === 'getStorage:ok' && !res.data.openId) {
         goTo({
           url: '/pages/auth/main'

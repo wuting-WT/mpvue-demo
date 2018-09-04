@@ -9,10 +9,6 @@
 </template>
 <script>
 export default {
-  created () {
-    console.log('slider')
-    console.log(this.slider, 'slider')
-  },
   props: {
     data: {
       type: Array,
