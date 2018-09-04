@@ -115,7 +115,7 @@ export default {
         transform: scale(0);
         opacity: 0;
         background-color: #f0f0f0;
-        transition: all 1s ;
+        transition: all .5s ;
       }
     }
 }
