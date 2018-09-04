@@ -22,13 +22,6 @@
     </div>
 </template>
 <script>
-export default {
-  created () {
-    console.log('modal created')
-  },
-  data () {
-  }
-}
 </script>
 <style lang="scss" scoped>
     .container {

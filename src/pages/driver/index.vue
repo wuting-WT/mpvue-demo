@@ -8,9 +8,6 @@
 import sliders from '@/components/sliders'
 import drivermodal from '@/components/drivermodal'
 export default {
-  created () {
-    console.log('created')
-  },
   data () {
     return {
       sliders: [
