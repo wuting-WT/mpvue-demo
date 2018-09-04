@@ -9,6 +9,12 @@
     <!-- 需要使用 button 来授权登录 -->
     <button class="getUserInfo" open-type="getUserInfo" @getuserinfo="bindGetUserInfo">授权登录</button>
     <div class="tips">请升级微信版本</div>
+    <div class="merchant">
+      <a :href="'/pages/merchant/main'">
+        <div>商家入口</div>
+        <span class="iconfont icon-you"></span>
+      </a> 
+    </div>
   </div>
 </template>
 <script>
@@ -47,6 +53,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  @import '../../icons/iconfont.css';
   .auth {
     background-color: #fff;
 
@@ -69,6 +76,20 @@ export default {
 
     .tips {
       text-align: center;
+    }
+    .merchant {
+      display: flex;
+      margin-top: 10px;
+      justify-content: center;
+      align-items: center;
+      color: #757575;
+      font-size: 16px;
+      div {
+        display: inline-block;
+      }
+      span {
+        font-size: 14px;
+      }
     }
   }
 </style>
