@@ -15,7 +15,7 @@
             'transform0' : personFilter === 'rise',
             'transform180': personFilter === 'drop' }"></span></div>
         <span class="line"></span>
-        <div @click="priceeSort" class="filter">预计酬劳<span :class="{
+        <div @click="priceSort" class="filter">预计酬劳<span :class="{
             'iconfont': true,
             'icon-shang': true,
             'transform0' : priceFilter === 'rise',
@@ -32,9 +32,9 @@ export default {
     }
   },
   props: {
-    filterOption: {
-      type: Array,
-      default: []
+    filter: {
+      type: Object,
+      default: {}
     }
   },
   methods: {
@@ -46,6 +46,8 @@ export default {
       } else if (this.timeFilter === 'drop') {
         this.timeFilter = 'rise'
       }
+      const { filterTime } = this.filter
+      filterTime(this.timeFilter)
       this.personFilter = ''
       this.priceFilter = ''
     },
@@ -57,10 +59,12 @@ export default {
       } else if (this.personFilter === 'drop') {
         this.personFilter = 'rise'
       }
+      const { filterPerson } = this.filter
+      filterPerson(this.personFilter)
       this.timeFilter = ''
       this.priceFilter = ''
     },
-    priceeSort: function (e) {
+    priceSort: function (e) {
       if (this.priceFilter === '') {
         this.priceFilter = 'rise'
       } else if (this.priceFilter === 'rise') {
@@ -68,6 +72,8 @@ export default {
       } else if (this.priceFilter === 'drop') {
         this.priceFilter = 'rise'
       }
+      const { filterPrice } = this.filter
+      filterPrice(this.priceFilter)
       this.timeFilter = ''
       this.personFilter = ''
     }

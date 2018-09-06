@@ -2,11 +2,15 @@ const Mock = require('mockjs')
 const Random = Mock.Random
 
 module.exports = {
-  'data|1-66': [
+  'total': 10,
+  'limit': 20,
+  'page|+1': 1,
+  'data|10': [
     {
       'id|+1': 1,
       'name': '@ctitle()',
       'price': '@integer(70, 200)',
+      'created_time': '@date(T)',
       'place': () => `${Random.city()}-${Random.county()}`,
       'expected_num': '@integer(10, 20)',
       'apply_num': '@integer(10, 20)',
@@ -14,6 +18,5 @@ module.exports = {
       'isApply': false,
       'isDone': '@boolean()'
     }
-  ],
-  total: 66
+  ]
 }
