@@ -1,12 +1,16 @@
 import { FETCH_LOST } from '../mutation-types'
 import { get, basehost } from '@/utils'
 const state = {
-  losts: []
+  losts: [],
+  isLoading: false
 }
 
 const actions = {
   [FETCH_LOST] ({state, commit}) {
-    get(`${basehost}/api/losts`).then((res) => {
+    get({
+      url: `${basehost}/api/losts`,
+      loading: true
+    }).then((res) => {
       commit(FETCH_LOST, res.data)
     })
   }

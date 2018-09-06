@@ -1,24 +1,26 @@
-<template>
+myLoading<template>
   <div class="container">
      <sliders :data="sliders"/>
-     <jobs :jobs="jobs" :applyJobs="applyJobs"/>
+     <jobs :filter="{filterTime, filterPerson, filterPrice}" :jobs="jobs" :applyJobs="applyJobs" :loading="loading"/>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { goTo, wxStorage } from '@/utils'
-import { FETCH_JOBS, APPLY_JOBS } from '@/stores/mutation-types'
+import { FETCH_JOBS, APPLY_JOBS, FILTER_TIME, FILTER_PERSON, FILTER_PRICE } from '@/stores/mutation-types'
 import sliders from '@/components/sliders'
 import navbar from '@/components/navbar'
 import jobs from '@/components/jobs'
 
 export default {
-  created () {
-    this.getJobs()
+  onShow () {
+    this.getJobs(true)
   },
   mounted () {
     wxStorage({
+      key: 'merchant'
+    }, 'get').then(data => wxStorage({
       key: 'user'
     }, 'get').then(res => {
       if (res.errMsg === 'getStorage:ok' && !res.data.openId) {
@@ -28,8 +30,9 @@ export default {
       }
     }).catch(e => goTo({
       url: '/pages/auth/main'
-    }))
+    })))
   },
+
   data () {
     return {
       sliders: [
@@ -53,13 +56,19 @@ export default {
   },
   computed: {
     ...mapState('jobs', {
-      jobs: state => state.jobs
+      jobs: state => state.jobs,
+      loading: state => state.isLoading
     })
   },
   methods: {
     ...mapActions('jobs', {
       getJobs: FETCH_JOBS,
       applyJobs: APPLY_JOBS
+    }),
+    ...mapMutations('jobs', {
+      filterTime: FILTER_TIME,
+      filterPerson: FILTER_PERSON,
+      filterPrice: FILTER_PRICE
     })
   },
   components: {
@@ -68,11 +77,13 @@ export default {
     jobs
   },
   async onPullDownRefresh () {
-    console.log('hasupdated')
-    wx.stopPullDownRefresh()
+    console.log('pullDowns')
+    this.getJobs(true)
+    if (!this.loading) wx.stopPullDownRefresh()
   },
   onReachBottom () {
     console.log('loadmore')
+    this.getJobs()
   }
 }
 </script>

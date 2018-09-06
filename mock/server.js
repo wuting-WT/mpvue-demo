@@ -50,4 +50,20 @@ app['post']('/api/user', (req, res) => {
     })
   })
 })
+app['post']('/api/merchant-login', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  const {account, password} = req.body
+  if (account === '1234' && password === '1234') {
+    res.json({
+      errcode: 0,
+      errmsg: 'success'
+    })
+  } else {
+    res.json({
+      errcode: 1,
+      errmsg: 'fail'
+    })
+  }
+})
 app.listen(port, () => console.log(`😄 Mock server is listening on port ${port}`))

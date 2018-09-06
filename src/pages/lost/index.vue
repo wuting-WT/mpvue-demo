@@ -17,7 +17,10 @@ export default {
   },
   computed: {
     ...mapState('losts', {
-      losts: state => state.losts
+      losts: state => {
+        console.log(state, 'losts')
+        return state.losts
+      }
     })
   },
   methods: {

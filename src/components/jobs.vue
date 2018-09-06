@@ -1,6 +1,6 @@
 <template>
   <div class="jobsContainer">
-    <filter />
+    <filter :filter="filter"/>
     <div v-for="item in jobs" :key="item.id" class="job">
         <div class="job-base">
             <span class="name">{{item.name}}</span>
@@ -9,11 +9,10 @@
         <div class="job-place">
             <span>{{item.place}}</span>
             <span><span class="apply_num">{{item.apply_num}}</span>/{{item.expected_num}}</span>
-            
         </div>
         <div class="job-extra">
             <div class="job_time">时间: 2018-08-10</div>
-            <button  type="primary" @click="applyJobs(item.id)" class="apply">{{!item.isApply ? '申请' : '已申请'}}</button>
+            <button  type="primary" @click="handleApplyJobs(item.id)" class="apply">{{!item.isApply ? '申请' : '已申请'}}</button>
         </div>
         <div class="introduction">
             <span>简介：</span>
@@ -23,9 +22,17 @@
   </div>
 </template>
 <script>
+import { goTo, wxStorage } from '@/utils'
 import filter from '@/components/filter'
 export default {
-  methods: {
+  created () {
+    console.log('created', this.filter)
+    if (this.loading) {
+      wx.showLoading({
+        title: '正在获取数据...',
+        mask: true
+      })
+    }
   },
   props: {
     jobs: {
@@ -35,6 +42,47 @@ export default {
     applyJobs: {
       type: Function,
       default: function () {}
+    },
+    filter: {
+      type: Object,
+      default: {}
+    }
+  },
+  methods: {
+    handleApplyJobs: function (id) {
+      wxStorage({
+        key: 'user'
+      }, 'get').then(res => {
+        if (res.errMsg === 'getStorage:ok' && !res.data.openId) {
+          wx.showToast({
+            title: '你还没有登录!',
+            icon: 'none',
+            duration: 2000,
+            success: () => {
+              setTimeout(() => {
+                goTo({
+                  url: '/pages/auth/main'
+                })
+              }, 2000)
+            }
+          })
+        } else {
+          this.applyJobs(id)
+        }
+      }).catch(e => {
+        wx.showToast({
+          title: '你还没有登录!',
+          icon: 'none',
+          duration: 2000,
+          success: () => {
+            setTimeout(() => {
+              goTo({
+                url: '/pages/auth/main'
+              })
+            }, 2000)
+          }
+        })
+      })
     }
   },
   components: {

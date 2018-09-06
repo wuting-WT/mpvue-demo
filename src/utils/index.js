@@ -20,9 +20,15 @@ function formatTime (date) {
   return `${t1} ${t2}`
 }
 
-const get = (url, data, timeout) => new Promise((resolve, reject) => {
-  wx.requestTimer = setTimeout(() => reject(new Error('fetch timeout!')), timeout || 10000)
-  const clear = () => clearInterval(wx.requestTimer)
+const get = ({url, data, loading}) => new Promise((resolve, reject) => {
+  const clear = () => wx.hideLoading()
+  if (loading) {
+    wx.showLoading({
+      title: '数据加载中...',
+      mask: true
+    })
+  }
+
   wx.request({
     url: url,
     data: data,
@@ -38,7 +44,7 @@ const get = (url, data, timeout) => new Promise((resolve, reject) => {
   })
 })
 
-const post = (url, data) => new Promise((resolve, reject) => {
+const post = ({url, data}) => new Promise((resolve, reject) => {
   wx.request({
     url: url,
     data: data,
